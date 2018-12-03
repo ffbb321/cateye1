@@ -1,29 +1,34 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
     <router-view/>
+    <tabs  v-model="selectIndex">
+      <tab-item v-for="(tabItem,index) in tabList " :key="index" :name="tabItem.name"></tab-item>  
+    </tabs>
   </div>
 </template>
-
-<style lang="scss">
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-#nav {
-  padding: 30px;
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-    &.router-link-exact-active {
-      color: #42b983;
+<script>
+export default {
+  data(){
+    return{
+      selectIndex:0,
+      tabList:[
+        {name:"电影",path:'./movie'},
+        {name:"影院",path:'./cinema'},
+        {name:"我的",path:'./mine'}
+      ]
+    }
+  },
+  watch:{
+    selectIndex:{
+      handler(newvalue){
+        this.$router.push(this.tabList[newvalue].path)
+      }
     }
   }
 }
+</script>
+
+
+<style lang="scss">
+
 </style>
